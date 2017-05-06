@@ -1,4 +1,4 @@
-package SI3;
+package Gomoku;
 
 
 public class GameLogic {
@@ -10,9 +10,10 @@ public class GameLogic {
     private int oldHoveredX;
     private int oldHoveredY;
     private BoardPanel boardPanel;
-
-    static final int BLACK = 1;
-    static final int WHITE = 2;
+    String blacksPlayer;
+    String whitesPlayer;
+    public static final int BLACK = 1;
+    public static final int WHITE = 2;
     static final int EMPTY = 0;
     private final int TIE = -1;
     private boolean gameOver;
@@ -38,14 +39,34 @@ public class GameLogic {
     }
 
 
-    public void move(int row, int col) {
+    public void firstAIMove() {
+        board[7][7] = nextPlayer;
+        nextPlayer = 3 - nextPlayer;
+        moveNumber++;
+    }
+
+    public void moveHuman(int row, int col) {
         board[row][col] = nextPlayer;
         nextPlayer = 3 - nextPlayer;
         moveNumber++;
-        int[] move = miniMax.miniMax( 2, false);
-        board[move[1]][move[2]] = nextPlayer;
-        nextPlayer = 3 - nextPlayer;
-        moveNumber++;
+        checkStatus();
+    }
+
+    public void moveAI(boolean isOpponent) {
+        if (!isGameOver()) {
+            int[] move = miniMax.run(2, isOpponent);
+            board[move[1]][move[2]] = nextPlayer;
+            nextPlayer = 3 - nextPlayer;
+            moveNumber++;
+            checkStatus();
+        }
+    }
+
+
+    public void move(int row, int col) {
+        moveHuman(row, col);
+        if(!areBothPlayers())
+            moveAI(false);
     }
 
 
@@ -76,6 +97,27 @@ public class GameLogic {
         return true;
     }
 
+    public void checkStatus() {
+        if (!isGameOver()) {
+            switch (getGameStatus()) {
+                case 1:
+                    setGameOver(true);
+                    boardPanel.getWinningLabel().setText("Blacks wins!");
+                    break;
+                case 2:
+                    setGameOver(true);
+                    boardPanel.getWinningLabel().setText("Whites wins!");
+                    break;
+                case -1:
+                    setGameOver(true);
+                    boardPanel.getWinningLabel().setText("Draw!");
+                    break;
+            }
+        }
+        boardPanel.repaint();
+
+    }
+
     public int getGameStatus() {
         for (int row = 0; row < ROWS; row++) {
             for (int col = 0; col < COLS; col++) {
@@ -104,7 +146,6 @@ public class GameLogic {
             return TIE;
         else
             return 0;
-
     }
 
     public void reset() {
@@ -115,9 +156,26 @@ public class GameLogic {
         }
         moveNumber = 0;
         gameOver = false;
+        setNextPlayer(BLACK);
         boardPanel.winningLabel.setText("");
         boardPanel.repaint();
 
+        if (blacksPlayer.equals("AI") && whitesPlayer.equals("Player"))
+            firstAIMove();
+
+        if (blacksPlayer.equals("AI") && whitesPlayer.equals("AI")) {
+            new Thread(
+                    new Runnable() {
+                        public void run() {
+                            firstAIMove();
+                            while (!isGameOver()) {
+                                moveAI(false);
+                                boardPanel.repaint();
+                            }
+                        }
+                    }
+            ).start();
+        }
     }
 
     public int[][] cloneBoard() {
@@ -128,6 +186,17 @@ public class GameLogic {
         return copy;
     }
 
+    public boolean isPlayer() {
+        return blacksPlayer.equals("Player") || whitesPlayer.equals("Player");
+    }
+
+    public boolean areBothAI() {
+        return blacksPlayer.equals("AI") && whitesPlayer.equals("AI");
+    }
+
+    public boolean areBothPlayers() {
+        return blacksPlayer.equals("Player") && whitesPlayer.equals("Player");
+    }
 
     public boolean isGameOver() {
         return gameOver;
@@ -137,20 +206,19 @@ public class GameLogic {
         this.gameOver = gameOver;
     }
 
-
-    public int[][] getBoard() {
-        return board;
-    }
-
-    public void setBoard(int[][] board) {
-        this.board = board;
+    public void setHeuristic(String heuristic, boolean blacks) {
+        miniMax.setHeuristic(heuristic, blacks);
     }
 
     public int getNextPlayer() {
         return nextPlayer;
     }
 
-    protected void setHeuristic(String heuristic) {
-        miniMax.setHeuristic(heuristic);
+    public void setBlacksPlayer(String blacksPlayer) {
+        this.blacksPlayer = blacksPlayer;
+    }
+
+    public void setWhitesPlayer(String whitesPlayer) {
+        this.whitesPlayer = whitesPlayer;
     }
 }

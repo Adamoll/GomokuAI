@@ -1,4 +1,4 @@
-package SI3;
+package Gomoku;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,7 +12,7 @@ public class BoardPanel extends JPanel implements ActionListener, MouseListener,
     int CELL_SIZE;
     int space;
     private GameLogic gameLogic;
-    final Color[] COLORS = {null, Color.black, Color.white,  new Color(255, 255, 255, 50), new Color(0, 0, 0, 50)};
+    final Color[] COLORS = {null, Color.black, Color.white, new Color(255, 255, 255, 50), new Color(0, 0, 0, 50)};
     final int EMPTY = 0;
 
 
@@ -29,29 +29,9 @@ public class BoardPanel extends JPanel implements ActionListener, MouseListener,
         addMouseListener(this);
         addMouseMotionListener(this);
         gameLogic = new GameLogic(ROWS, COLS, this);
-        gameLogic.setNextPlayer(1);
+        gameLogic.setNextPlayer(GameLogic.BLACK);
     }
 
-    public void checkStatus() {
-        if(!gameLogic.isGameOver()) {
-            switch(gameLogic.getGameStatus()) {
-                case 1:
-                    gameLogic.setGameOver(true);
-                    winningLabel.setText("Player 1 WINS");
-                    break;
-                case 2:
-                    gameLogic.setGameOver(true);
-                    winningLabel.setText("Player 2 WINS");
-                    break;
-                case -1:
-                    gameLogic.setGameOver(true);
-                    winningLabel.setText("IT'S A DRAW");
-                    break;
-            }
-        }
-        repaint();
-
-    }
 
     @Override
     protected void paintComponent(Graphics g) {
@@ -76,7 +56,6 @@ public class BoardPanel extends JPanel implements ActionListener, MouseListener,
                 }
             }
         }
-
     }
 
     @Override
@@ -87,10 +66,11 @@ public class BoardPanel extends JPanel implements ActionListener, MouseListener,
     public void mouseClicked(MouseEvent e) {
         int x = e.getX() / CELL_SIZE;
         int y = e.getY() / CELL_SIZE;
-        if (!gameLogic.isGameOver() && x < COLS && y < ROWS && !gameLogic.isTaken(x, y)) {
-            gameLogic.move(x, y);
-            repaint();
-            checkStatus();
+        if (!gameLogic.areBothAI()) {
+            if (!gameLogic.isGameOver() && x < COLS && y < ROWS && !gameLogic.isTaken(x, y)) {
+                gameLogic.move(x, y);
+                repaint();
+            }
         }
     }
 
@@ -130,4 +110,13 @@ public class BoardPanel extends JPanel implements ActionListener, MouseListener,
     protected GameLogic getGameLogic() {
         return gameLogic;
     }
+
+    public JLabel getWinningLabel() {
+        return winningLabel;
+    }
+
+    public void setWinningLabel(JLabel winningLabel) {
+        this.winningLabel = winningLabel;
+    }
+
 }

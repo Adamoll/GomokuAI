@@ -1,4 +1,4 @@
-package SI3;
+package Gomoku;
 
 import javax.swing.*;
 import java.awt.*;
@@ -49,10 +49,12 @@ public class OptionPanel extends JPanel implements ActionListener {
                         gbc.insets = new Insets(0, 0, AI1.getHeight(), 0);
                         AI1.setVisible(false);
                     }
+                    gameLogic.setBlacksPlayer(item);
                     add(blacksPlayer, gbc);
                 }
             }
         });
+        gameLogic.setBlacksPlayer(players[0]);
         whitesPlayer = new JComboBox(players);
         whitesPlayer.setSelectedIndex(1);
         whitesPlayer.addItemListener(new ItemListener() {
@@ -70,19 +72,32 @@ public class OptionPanel extends JPanel implements ActionListener {
                         gbc.insets = new Insets(0, 0, AI2.getHeight(), 0);
                         AI2.setVisible(false);
                     }
+                    gameLogic.setWhitesPlayer(item);
                     add(whitesPlayer, gbc);
                 }
             }
         });
+        gameLogic.setWhitesPlayer(players[1]);
 
         AI1.addItemListener(new ItemListener() {
             public void itemStateChanged(ItemEvent event) {
                 if (event.getStateChange() == ItemEvent.SELECTED) {
                     String item = (String) event.getItem();
-                    setHeuristic(item);
+                    setHeuristic(item, true);
                 }
             }
         });
+
+        AI2.addItemListener(new ItemListener() {
+            public void itemStateChanged(ItemEvent event) {
+                if (event.getStateChange() == ItemEvent.SELECTED) {
+                    String item = (String) event.getItem();
+                    setHeuristic(item, false);
+                }
+            }
+        });
+
+
 
         player1Label = new JLabel("Black");
         player2Label = new JLabel("White");
@@ -125,7 +140,7 @@ public class OptionPanel extends JPanel implements ActionListener {
         }
     }
 
-    private void setHeuristic(String heuristic) {
-        gameLogic.setHeuristic(heuristic);
+    private void setHeuristic(String heuristic, boolean blacks) {
+        gameLogic.setHeuristic(heuristic, blacks);
     }
 }

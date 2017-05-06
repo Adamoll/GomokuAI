@@ -1,4 +1,4 @@
-package SI3.Heuristics;
+package Gomoku.Heuristics;
 
 /**
  * Created by Jan Matejko on 02.05.2017.
@@ -6,4 +6,5 @@ package SI3.Heuristics;
 public interface HeuristicInterface {
 
     int evaluate(int player);
+    void setBoard(int[][] board);
 }

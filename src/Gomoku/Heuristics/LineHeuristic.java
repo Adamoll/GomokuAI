@@ -1,4 +1,4 @@
-package SI3.Heuristics;
+package Gomoku.Heuristics;
 
 /**
  * Created by Jan Matejko on 02.05.2017.
@@ -42,5 +42,10 @@ public class LineHeuristic implements HeuristicInterface {
             }
         }
         return neighbours * neighbours * neighbours;
+    }
+
+    @Override
+    public void setBoard(int[][] board) {
+        this.board = board;
     }
 }

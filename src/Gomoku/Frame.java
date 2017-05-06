@@ -1,4 +1,4 @@
-package SI3;
+package Gomoku;
 
 import javax.swing.*;
 import java.awt.*;
