@@ -1,6 +1,5 @@
 package Gomoku;
 
-
 public class GameLogic {
     private int ROWS;
     private int COLS;
@@ -18,6 +17,7 @@ public class GameLogic {
     private final int TIE = -1;
     private boolean gameOver;
     private MiniMax miniMax;
+    private Thread AIGame;
 
 
     GameLogic(int ROWS, int COLS, BoardPanel boardPanel) {
@@ -65,7 +65,7 @@ public class GameLogic {
 
     public void move(int row, int col) {
         moveHuman(row, col);
-        if(!areBothPlayers())
+        if (!areBothPlayers())
             moveAI(false);
     }
 
@@ -75,7 +75,7 @@ public class GameLogic {
     }
 
     public boolean isTaken(int row, int col) {
-        return board[row][col] != 0 && board[row][col] != 3 && board[row][col] != 4;
+        return board[row][col] == BLACK || board[row][col] == WHITE;
     }
 
     public void setOldHovered(int x, int y) {
@@ -97,6 +97,37 @@ public class GameLogic {
         return true;
     }
 
+
+    public int getGameStatus() {
+        for (int row = 0; row < ROWS; row++) {
+            for (int col = 0; col < COLS; col++) {
+                int place = board[row][col];
+                if (place != EMPTY) {
+                    int player = board[row][col];
+                    if (row < ROWS - 4) // look down
+                        if (check(row, 1, col, 0))
+                            return player;
+
+                    if (col < COLS - 4) // look right
+                        if (check(row, 0, col, 1))
+                            return player;
+
+                    if (col < COLS - 4 && row < ROWS - 4) // look diagonal right
+                        if (check(row, 1, col, 1))
+                            return player;
+                    if (col > 3 && row < ROWS - 4)
+                        if (check(row, 1, col, -1)) // look diagonal left
+                            return player;
+                }
+            }
+        }
+
+        if (moveNumber == ROWS * COLS)
+            return TIE;
+        else
+            return 0;
+    }
+
     public void checkStatus() {
         if (!isGameOver()) {
             switch (getGameStatus()) {
@@ -114,41 +145,13 @@ public class GameLogic {
                     break;
             }
         }
+
         boardPanel.repaint();
-
-    }
-
-    public int getGameStatus() {
-        for (int row = 0; row < ROWS; row++) {
-            for (int col = 0; col < COLS; col++) {
-                int place = board[row][col];
-                if (place != EMPTY) {
-                    int player = board[row][col];
-                    if (row < ROWS - 4) // look upp
-                        if (check(row, 1, col, 0))
-                            return player;
-
-                    if (col < COLS - 4) // look right
-                        if (check(row, 0, col, 1))
-                            return player;
-
-                    if (col < COLS - 4 && row < ROWS - 4) // look diagonal right
-                        if (check(row, 1, col, 1))
-                            return player;
-                    if (col > 3 && row < ROWS - 4)
-                        if (check(row, 1, col, -1))
-                            return player;
-
-                }
-            }
-        }
-        if (moveNumber == ROWS * COLS)
-            return TIE;
-        else
-            return 0;
     }
 
     public void reset() {
+        if (AIGame != null)
+            AIGame.interrupt();
         for (int row = 0; row < ROWS; row++) {
             for (int col = 0; col < COLS; col++) {
                 board[row][col] = EMPTY;
@@ -160,21 +163,24 @@ public class GameLogic {
         boardPanel.winningLabel.setText("");
         boardPanel.repaint();
 
+
         if (blacksPlayer.equals("AI") && whitesPlayer.equals("Player"))
             firstAIMove();
 
         if (blacksPlayer.equals("AI") && whitesPlayer.equals("AI")) {
-            new Thread(
+            AIGame = new Thread(
                     new Runnable() {
                         public void run() {
                             firstAIMove();
-                            while (!isGameOver()) {
+                            while (!Thread.currentThread().isInterrupted() && !isGameOver()) {
                                 moveAI(false);
                                 boardPanel.repaint();
                             }
+
                         }
                     }
-            ).start();
+            );
+            AIGame.start();
         }
     }
 
