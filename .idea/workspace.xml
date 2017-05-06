@@ -2,29 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bf7e5874-c305-4d36-86dd-6c5744c8bb3c" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SI3/SI3/BoardPanel.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SI3/SI3/Frame.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SI3/SI3/GameLogic.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SI3/SI3/Heuristics/BlockingHeuristic.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SI3/SI3/Heuristics/HeuristicInterface.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SI3/SI3/Heuristics/LineHeuristic.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SI3/SI3/MainPanel.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SI3/SI3/MiniMax.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SI3/SI3/OptionPanel$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SI3/SI3/OptionPanel$2.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SI3/SI3/OptionPanel$3.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SI3/SI3/OptionPanel.class" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/SI3/BoardPanel.java" afterPath="$PROJECT_DIR$/src/Gomoku/BoardPanel.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/SI3/Frame.java" afterPath="$PROJECT_DIR$/src/Gomoku/Frame.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/SI3/GameLogic.java" afterPath="$PROJECT_DIR$/src/Gomoku/GameLogic.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/SI3/Heuristics/BlockingHeuristic.java" afterPath="$PROJECT_DIR$/src/Gomoku/Heuristics/BlockingHeuristic.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/SI3/Heuristics/HeuristicInterface.java" afterPath="$PROJECT_DIR$/src/Gomoku/Heuristics/HeuristicInterface.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/SI3/Heuristics/LineHeuristic.java" afterPath="$PROJECT_DIR$/src/Gomoku/Heuristics/LineHeuristic.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/SI3/MainPanel.java" afterPath="$PROJECT_DIR$/src/Gomoku/MainPanel.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/SI3/MiniMax.java" afterPath="$PROJECT_DIR$/src/Gomoku/MiniMax.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/SI3/OptionPanel.java" afterPath="$PROJECT_DIR$/src/Gomoku/OptionPanel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Gomoku/MainPanel.java" afterPath="$PROJECT_DIR$/src/Gomoku/MainPanel.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -70,10 +48,20 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="MainPanel.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/Gomoku/MainPanel.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="51">
+              <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="GameLogic.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Gomoku/GameLogic.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="98">
+            <state relative-caret-position="-2325">
               <caret line="57" column="0" lean-forward="false" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
               <folding>
                 <element signature="e#5408#5409#0" expanded="true" />
@@ -125,7 +113,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BlockingHeuristic.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="BlockingHeuristic.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Gomoku/Heuristics/BlockingHeuristic.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="498">
@@ -195,6 +183,7 @@
         <option value="$PROJECT_DIR$/src/Gomoku/MiniMax.java" />
         <option value="$PROJECT_DIR$/src/Gomoku/GameLogic.java" />
         <option value="$PROJECT_DIR$/src/Gomoku/Heuristics/BlockingHeuristic.java" />
+        <option value="$PROJECT_DIR$/src/Gomoku/MainPanel.java" />
       </list>
     </option>
   </component>
@@ -717,12 +706,12 @@
       <workItem from="1493806170760" duration="6204000" />
       <workItem from="1493910880678" duration="26000" />
       <workItem from="1494016531840" duration="599000" />
-      <workItem from="1494069061457" duration="16373000" />
+      <workItem from="1494069061457" duration="16685000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="70930000" />
+    <option name="totallyTimeSpent" value="71242000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -755,7 +744,7 @@
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3289689" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29787233" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29787233" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980332" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3289689" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20045386" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -1260,13 +1249,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Gomoku/MainPanel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="55">
-          <caret line="31" column="40" lean-forward="false" selection-start-line="31" selection-start-column="40" selection-end-line="31" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Gomoku/Frame.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
@@ -1292,37 +1274,6 @@
             <element signature="imports" expanded="true" />
             <element signature="e#4742#4743#0" expanded="true" />
             <element signature="e#4799#4800#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Gomoku/BoardPanel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1190">
-          <caret line="70" column="37" lean-forward="true" selection-start-line="70" selection-start-column="37" selection-end-line="70" selection-end-column="37" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2965#2966#0" expanded="true" />
-            <element signature="e#2997#2998#0" expanded="true" />
-            <element signature="e#3036#3037#0" expanded="true" />
-            <element signature="e#3071#3072#0" expanded="true" />
-            <element signature="e#3127#3128#0" expanded="true" />
-            <element signature="e#3175#3176#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Gomoku/GameLogic.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="98">
-          <caret line="57" column="0" lean-forward="false" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
-          <folding>
-            <element signature="e#5408#5409#0" expanded="true" />
-            <element signature="e#5493#5494#0" expanded="true" />
-            <element signature="e#5527#5528#0" expanded="true" />
-            <element signature="e#5604#5605#0" expanded="true" />
-            <element signature="e#5643#5644#0" expanded="true" />
-            <element signature="e#5728#5729#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1366,6 +1317,45 @@
             <element signature="e#2458#2459#0" expanded="true" />
             <element signature="e#2492#2493#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Gomoku/BoardPanel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1190">
+          <caret line="70" column="37" lean-forward="true" selection-start-line="70" selection-start-column="37" selection-end-line="70" selection-end-column="37" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2965#2966#0" expanded="true" />
+            <element signature="e#2997#2998#0" expanded="true" />
+            <element signature="e#3036#3037#0" expanded="true" />
+            <element signature="e#3071#3072#0" expanded="true" />
+            <element signature="e#3127#3128#0" expanded="true" />
+            <element signature="e#3175#3176#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Gomoku/GameLogic.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2325">
+          <caret line="57" column="0" lean-forward="false" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
+          <folding>
+            <element signature="e#5408#5409#0" expanded="true" />
+            <element signature="e#5493#5494#0" expanded="true" />
+            <element signature="e#5527#5528#0" expanded="true" />
+            <element signature="e#5604#5605#0" expanded="true" />
+            <element signature="e#5643#5644#0" expanded="true" />
+            <element signature="e#5728#5729#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Gomoku/MainPanel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>

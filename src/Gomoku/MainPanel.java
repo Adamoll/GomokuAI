@@ -3,10 +3,6 @@ package Gomoku;
 import javax.swing.*;
 import java.awt.*;
 
-
-/**
- * Created by Jan Matejko on 24.04.2017.
- */
 public class MainPanel extends JPanel {
     GridBagLayout gridBagLayout;
     GridBagConstraints gridBagConstraints;
@@ -34,11 +30,4 @@ public class MainPanel extends JPanel {
         gridBagConstraints.anchor = GridBagConstraints.NORTH;
         add(optionPanel, gridBagConstraints);
     }
-
-    @Override
-    protected void paintComponent(Graphics g) {
-        Graphics2D g2d = (Graphics2D) g;
-        //g2d.draw(new Rectangle(10, 10, 10, 10));
-    }
-
 }
