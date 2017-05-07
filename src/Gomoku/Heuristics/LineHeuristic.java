@@ -4,6 +4,7 @@ package Gomoku.Heuristics;
  * Created by Jan Matejko on 02.05.2017.
  */
 public class LineHeuristic implements HeuristicInterface {
+    String name = "Line";
 
     private int[][] board;
 
@@ -47,5 +48,13 @@ public class LineHeuristic implements HeuristicInterface {
     @Override
     public void setBoard(int[][] board) {
         this.board = board;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

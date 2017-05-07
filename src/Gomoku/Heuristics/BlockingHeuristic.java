@@ -6,6 +6,7 @@ import Gomoku.GameLogic;
  * Created by Jan Matejko on 02.05.2017.
  */
 public class BlockingHeuristic implements HeuristicInterface {
+    String name = "Blocking";
     private int[][] board;
 
     public BlockingHeuristic(int[][] board) {
@@ -57,11 +58,19 @@ public class BlockingHeuristic implements HeuristicInterface {
                     return i * i * i * i;
             }
         }
-        return neighbours * 1000000;
+        return neighbours * neighbours * neighbours * neighbours;
     }
 
     @Override
     public void setBoard(int[][] board) {
         this.board = board;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

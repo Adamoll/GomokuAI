@@ -1,8 +1,10 @@
 package Gomoku;
 
+import Gomoku.Heuristics.HeuristicInterface;
+
 public class GameLogic {
-    private int ROWS;
-    private int COLS;
+    public static int ROWS;
+    public static int COLS;
     private int[][] board;
     private int nextPlayer;
     private int moveNumber;
@@ -17,6 +19,8 @@ public class GameLogic {
     private final int TIE = -1;
     private boolean gameOver;
     private MiniMax miniMax;
+    private AlphaBeta alphaBeta;
+    private SearchAlgoritm algoritm;
     private Thread AIGame;
 
 
@@ -28,6 +32,8 @@ public class GameLogic {
         this.gameOver = false;
         moveNumber = 0;
         miniMax = new MiniMax(this.board, this);
+        alphaBeta = new AlphaBeta(this.board, this);
+        algoritm = miniMax;
     }
 
     public int getPlayerAt(int row, int col) {
@@ -54,7 +60,7 @@ public class GameLogic {
 
     public void moveAI(boolean isOpponent) {
         if (!isGameOver()) {
-            int[] move = miniMax.run(2, isOpponent);
+            int[] move = algoritm.run(4, isOpponent);
             board[move[1]][move[2]] = nextPlayer;
             nextPlayer = 3 - nextPlayer;
             moveNumber++;
@@ -213,7 +219,12 @@ public class GameLogic {
     }
 
     public void setHeuristic(String heuristic, boolean blacks) {
-        miniMax.setHeuristic(heuristic, blacks);
+        //miniMax.setHeuristic(heuristic, blacks);
+        algoritm.setHeuristic(heuristic, blacks);
+    }
+
+    public HeuristicInterface[] getHeuristics() {
+        return algoritm.getHeuristic();
     }
 
     public int getNextPlayer() {
@@ -226,5 +237,13 @@ public class GameLogic {
 
     public void setWhitesPlayer(String whitesPlayer) {
         this.whitesPlayer = whitesPlayer;
+    }
+
+    public void setAlgoritm(String alg) {
+        if (alg.equals("MiniMax")) {
+            algoritm = miniMax;
+        } else if (alg.equals("Alpha-Beta")) {
+            algoritm = alphaBeta;
+        }
     }
 }

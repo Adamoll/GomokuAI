@@ -5,9 +5,9 @@ import Gomoku.Heuristics.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MiniMax {
+public class MiniMax implements SearchAlgoritm {
 
-    private int[][] board;
+    protected int[][] board;
     GameLogic gameLogic;
     HeuristicInterface heuristicBlacks;
     HeuristicInterface heuristicWhites;
@@ -106,20 +106,38 @@ public class MiniMax {
         return result;
     }
 
-    private List<int[]> getMoves() {
+    protected List<int[]> getMoves() {
         ArrayList<int[]> moves = new ArrayList<>();
 
         for (int row = 0; row < board.length; row++) {
             for (int col = 0; col < board[row].length; col++) {
-                if (board[row][col] == GameLogic.EMPTY) {
+//                if (board[row][col] == GameLogic.EMPTY) {
+//                    moves.add(new int[]{row, col});
+//                }
+                if(board[row][col] == GameLogic.EMPTY && isRationalMove(row, col))
                     moves.add(new int[]{row, col});
-                }
             }
         }
         return moves;
     }
 
-    protected void setHeuristic(String heuristic, boolean blacks) {
+    private boolean isRationalMove(int row, int col) {
+        boolean rational = false;
+        for (int i = -1; i < 2; i++) {
+            for (int j = -1; j < 2; j++) {
+                int x = row + i;
+                int y = col + j;
+                if(x >= 0 && x < GameLogic.ROWS && y >=0 && y < GameLogic.COLS) {
+                    if(board[x][y] != GameLogic.EMPTY) {
+                        rational = true;
+                    }
+                }
+            }
+        }
+        return rational;
+    }
+
+    public void setHeuristic(String heuristic, boolean blacks) {
         if (blacks) {
             if (heuristic.equals("Line")) {
                 this.heuristicBlacks = new LineHeuristic(board);
@@ -134,6 +152,11 @@ public class MiniMax {
             }
         }
 
+    }
+
+    @Override
+    public HeuristicInterface[] getHeuristic() {
+        return new HeuristicInterface[]{heuristicBlacks, heuristicWhites};
     }
 
     public void setBoard(int[][] board) {

@@ -1,5 +1,10 @@
 package Gomoku;
 
+import Gomoku.Heuristics.BlockingHeuristic;
+import Gomoku.Heuristics.HeuristicInterface;
+import Gomoku.Heuristics.LineHeuristic;
+
+import javax.sound.sampled.Line;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -9,12 +14,17 @@ import java.awt.event.ItemListener;
 
 public class OptionPanel extends JPanel implements ActionListener {
 
+    private Color backgroundColor;
     JComboBox blacksPlayer;
     JComboBox whitesPlayer;
     JComboBox AI1;
     JComboBox AI2;
+    JRadioButton miniMax;
+    JRadioButton alphaBeta;
+    ButtonGroup algoritmGroup;
     JLabel player1Label;
     JLabel player2Label;
+    JLabel algoritmLabel;
     JButton startButton;
     final String[] players = {"Player", "AI"};
     final String[] AIHeuristics = {"Line", "Blocking"};
@@ -26,7 +36,8 @@ public class OptionPanel extends JPanel implements ActionListener {
         super();
         this.gameLogic = gameLogic;
 
-        setBackground(Color.cyan);
+        backgroundColor = Color.cyan;
+        setBackground(backgroundColor);
         setOpaque(true);
         layout = new GridBagLayout();
         gbc = new GridBagConstraints();
@@ -39,7 +50,7 @@ public class OptionPanel extends JPanel implements ActionListener {
                 if (event.getStateChange() == ItemEvent.SELECTED) {
                     String item = (String) event.getItem();
                     gbc.gridx = 0;
-                    gbc.gridy = 1;
+                    gbc.gridy = 4;
                     gbc.anchor = GridBagConstraints.NORTH;
                     remove(blacksPlayer);
                     if (item.equals("AI")) {
@@ -62,7 +73,7 @@ public class OptionPanel extends JPanel implements ActionListener {
                 if (event.getStateChange() == ItemEvent.SELECTED) {
                     String item = (String) event.getItem();
                     gbc.gridx = 0;
-                    gbc.gridy = 4;
+                    gbc.gridy = 7;
                     gbc.anchor = GridBagConstraints.NORTH;
                     remove(whitesPlayer);
                     if (item.equals("AI")) {
@@ -96,30 +107,49 @@ public class OptionPanel extends JPanel implements ActionListener {
                 }
             }
         });
+        RadioButtonActionListener radioButtonActionListener = new RadioButtonActionListener();
+        algoritmLabel = new JLabel("Algoritm:");
 
+        miniMax = new JRadioButton("MiniMax");
+        miniMax.setBackground(backgroundColor);
+        miniMax.addActionListener(radioButtonActionListener);
+        miniMax.setSelected(true);
 
+        alphaBeta = new JRadioButton("Alpha-Beta");
+        alphaBeta.setBackground(backgroundColor);
+        alphaBeta.addActionListener(radioButtonActionListener);
+
+        algoritmGroup = new ButtonGroup();
+        algoritmGroup.add(miniMax);
+        algoritmGroup.add(alphaBeta);
 
         player1Label = new JLabel("Black");
         player2Label = new JLabel("White");
         startButton = new JButton("Start game");
         startButton.addActionListener(this);
+
         gbc.gridx = 0;
         gbc.gridy = 0;
-        gbc.anchor = GridBagConstraints.NORTH;
+        add(algoritmLabel, gbc);
+        gbc.gridy++;
+        add(miniMax, gbc);
+        gbc.gridy++;
+        add(alphaBeta, gbc);
+        gbc.gridy++;
         add(player1Label, gbc);
-        gbc.gridy = 1;
+        gbc.gridy++;
         gbc.insets = new Insets(0, 0, 25, 0);
         add(blacksPlayer, gbc);
         gbc.insets = new Insets(0, 0, 0, 0);
-        gbc.gridy = 2;
+        gbc.gridy++;
         add(AI1, gbc);
-        gbc.gridy = 3;
+        gbc.gridy++;
         add(player2Label, gbc);
-        gbc.gridy = 4;
+        gbc.gridy++;
         add(whitesPlayer, gbc);
-        gbc.gridy = 5;
+        gbc.gridy++;
         add(AI2, gbc);
-        gbc.gridy = 6;
+        gbc.gridy++;
         add(startButton, gbc);
 
         AI1.setVisible(false);
@@ -143,4 +173,18 @@ public class OptionPanel extends JPanel implements ActionListener {
     private void setHeuristic(String heuristic, boolean blacks) {
         gameLogic.setHeuristic(heuristic, blacks);
     }
+
+    private class RadioButtonActionListener implements ActionListener {
+        @Override
+
+        public void actionPerformed(ActionEvent event) {
+            JRadioButton button = (JRadioButton) event.getSource();
+            HeuristicInterface[] heuristics = gameLogic.getHeuristics();
+            gameLogic.setAlgoritm(button.getText());
+            gameLogic.setHeuristic(heuristics[0].getName(), true);
+            gameLogic.setHeuristic(heuristics[1].getName(), false);
+
+        }
+    }
 }
+
