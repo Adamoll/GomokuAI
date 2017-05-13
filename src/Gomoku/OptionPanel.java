@@ -1,10 +1,6 @@
 package Gomoku;
 
-import Gomoku.Heuristics.BlockingHeuristic;
 import Gomoku.Heuristics.HeuristicInterface;
-import Gomoku.Heuristics.LineHeuristic;
-
-import javax.sound.sampled.Line;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -27,7 +23,7 @@ public class OptionPanel extends JPanel implements ActionListener {
     JLabel algoritmLabel;
     JButton startButton;
     final String[] players = {"Player", "AI"};
-    final String[] AIHeuristics = {"Line", "Blocking"};
+    final String[] AIHeuristics = {"Line", "Blocking", "Spatial"};
     GridBagLayout layout;
     GridBagConstraints gbc;
     private GameLogic gameLogic;

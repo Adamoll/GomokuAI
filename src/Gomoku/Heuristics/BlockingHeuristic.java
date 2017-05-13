@@ -2,9 +2,6 @@ package Gomoku.Heuristics;
 
 import Gomoku.GameLogic;
 
-/**
- * Created by Jan Matejko on 02.05.2017.
- */
 public class BlockingHeuristic implements HeuristicInterface {
     String name = "Blocking";
     private int[][] board;

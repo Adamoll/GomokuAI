@@ -15,7 +15,7 @@ public class GameLogic {
     String whitesPlayer;
     public static final int BLACK = 1;
     public static final int WHITE = 2;
-    static final int EMPTY = 0;
+    public static final int EMPTY = 0;
     private final int TIE = -1;
     private boolean gameOver;
     private MiniMax miniMax;
@@ -219,7 +219,6 @@ public class GameLogic {
     }
 
     public void setHeuristic(String heuristic, boolean blacks) {
-        //miniMax.setHeuristic(heuristic, blacks);
         algoritm.setHeuristic(heuristic, blacks);
     }
 

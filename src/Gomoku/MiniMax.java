@@ -114,7 +114,7 @@ public class MiniMax implements SearchAlgoritm {
 //                if (board[row][col] == GameLogic.EMPTY) {
 //                    moves.add(new int[]{row, col});
 //                }
-                if(board[row][col] == GameLogic.EMPTY && isRationalMove(row, col))
+                if (board[row][col] == GameLogic.EMPTY && isRationalMove(row, col))
                     moves.add(new int[]{row, col});
             }
         }
@@ -127,8 +127,8 @@ public class MiniMax implements SearchAlgoritm {
             for (int j = -1; j < 2; j++) {
                 int x = row + i;
                 int y = col + j;
-                if(x >= 0 && x < GameLogic.ROWS && y >=0 && y < GameLogic.COLS) {
-                    if(board[x][y] != GameLogic.EMPTY) {
+                if (x >= 0 && x < GameLogic.ROWS && y >= 0 && y < GameLogic.COLS) {
+                    if (board[x][y] != GameLogic.EMPTY) {
                         rational = true;
                     }
                 }
@@ -143,15 +143,16 @@ public class MiniMax implements SearchAlgoritm {
                 this.heuristicBlacks = new LineHeuristic(board);
             } else if (heuristic.equals("Blocking")) {
                 this.heuristicBlacks = new BlockingHeuristic(board);
-            }
+            } else if (heuristic.equals("Spatial"))
+                this.heuristicBlacks = new SpatialHeuristic(board);
         } else {
             if (heuristic.equals("Line")) {
                 this.heuristicWhites = new LineHeuristic(board);
             } else if (heuristic.equals("Blocking")) {
                 this.heuristicWhites = new BlockingHeuristic(board);
-            }
+            } else if (heuristic.equals("Spatial"))
+                this.heuristicWhites = new SpatialHeuristic(board);
         }
-
     }
 
     @Override
