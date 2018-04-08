@@ -4,34 +4,35 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-
 public class BoardPanel extends JPanel implements ActionListener, MouseListener, MouseMotionListener {
-    JLabel winningLabel;
-    int ROWS;
-    int COLS;
-    int CELL_SIZE;
-    int space;
+    private final int EMPTY = 0;
+    private final Color[] COLORS = {null, Color.black, Color.white,
+            new Color(255, 255, 255, 80),
+            new Color(0, 0, 0, 80)};
+    private int ROWS;
+    private int COLS;
+    private int CELL_SIZE;
+    private int space;
+    private JLabel winningLabel;
     private GameLogic gameLogic;
-    final Color[] COLORS = {null, Color.black, Color.white, new Color(255, 255, 255, 50), new Color(0, 0, 0, 50)};
-    final int EMPTY = 0;
-
 
     BoardPanel() {
-        winningLabel = new JLabel();
-        winningLabel.setFont(new Font("Serif", Font.PLAIN, 30));
-        add(winningLabel);
         ROWS = 15;
         COLS = 15;
         CELL_SIZE = 30;
         space = CELL_SIZE / 2;
+
+        gameLogic = new GameLogic(ROWS, COLS, this);
+        gameLogic.setNextPlayer(GameLogic.BLACK);
+
+        winningLabel = new JLabel();
+        winningLabel.setFont(new Font("Serif", Font.PLAIN, 30));
+        add(winningLabel);
         setBackground(Color.orange);
         setOpaque(true);
         addMouseListener(this);
         addMouseMotionListener(this);
-        gameLogic = new GameLogic(ROWS, COLS, this);
-        gameLogic.setNextPlayer(GameLogic.BLACK);
     }
-
 
     @Override
     protected void paintComponent(Graphics g) {
@@ -59,10 +60,6 @@ public class BoardPanel extends JPanel implements ActionListener, MouseListener,
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
-    }
-
-    @Override
     public void mouseClicked(MouseEvent e) {
         int x = e.getX() / CELL_SIZE;
         int y = e.getY() / CELL_SIZE;
@@ -72,6 +69,26 @@ public class BoardPanel extends JPanel implements ActionListener, MouseListener,
                 repaint();
             }
         }
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+        gameLogic.resetOldHovered();
+        int x = e.getX() / CELL_SIZE;
+        int y = e.getY() / CELL_SIZE;
+        if (x < 15 && y < 15 && !gameLogic.isTaken(x, y)) {
+            gameLogic.setHovered(x, y);
+            repaint();
+            gameLogic.setOldHovered(x, y);
+        }
+    }
+
+    public void setWinningLabelText(String text) {
+        winningLabel.setText(text);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
     }
 
     @Override
@@ -90,21 +107,8 @@ public class BoardPanel extends JPanel implements ActionListener, MouseListener,
     public void mouseExited(MouseEvent e) {
     }
 
-
     @Override
     public void mouseDragged(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseMoved(MouseEvent e) {
-        gameLogic.resetOldHovered();
-        int x = e.getX() / CELL_SIZE;
-        int y = e.getY() / CELL_SIZE;
-        if (x < 15 && y < 15 && !gameLogic.isTaken(x, y)) {
-            gameLogic.setHovered(x, y);
-            repaint();
-            gameLogic.setOldHovered(x, y);
-        }
     }
 
     protected GameLogic getGameLogic() {
@@ -114,9 +118,4 @@ public class BoardPanel extends JPanel implements ActionListener, MouseListener,
     public JLabel getWinningLabel() {
         return winningLabel;
     }
-
-    public void setWinningLabel(JLabel winningLabel) {
-        this.winningLabel = winningLabel;
-    }
-
 }

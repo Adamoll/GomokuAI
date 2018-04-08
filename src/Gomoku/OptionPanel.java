@@ -1,6 +1,7 @@
 package Gomoku;
 
 import Gomoku.Heuristics.HeuristicInterface;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -9,23 +10,23 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
 public class OptionPanel extends JPanel implements ActionListener {
-
+    private final String[] players = {"Player", "AI"};
+    private final String[] AIHeuristics = {"Line", "Blocking", "Spatial"};
     private Color backgroundColor;
-    JComboBox blacksPlayer;
-    JComboBox whitesPlayer;
-    JComboBox AI1;
-    JComboBox AI2;
-    JRadioButton miniMax;
-    JRadioButton alphaBeta;
-    ButtonGroup algoritmGroup;
-    JLabel player1Label;
-    JLabel player2Label;
-    JLabel algoritmLabel;
-    JButton startButton;
-    final String[] players = {"Player", "AI"};
-    final String[] AIHeuristics = {"Line", "Blocking", "Spatial"};
-    GridBagLayout layout;
-    GridBagConstraints gbc;
+    private JComboBox blacksPlayer;
+    private JComboBox whitesPlayer;
+    private JComboBox AI1;
+    private JComboBox AI2;
+    private JButton startButton;
+    private JRadioButton miniMax;
+    private JRadioButton alphaBeta;
+    private ButtonGroup algoritmGroup;
+    private JLabel player1Label;
+    private JLabel player2Label;
+    private JLabel algoritmLabel;
+
+    private GridBagLayout layout;
+    private GridBagConstraints gbc;
     private GameLogic gameLogic;
 
     OptionPanel(GameLogic gameLogic) {
@@ -35,12 +36,48 @@ public class OptionPanel extends JPanel implements ActionListener {
         backgroundColor = Color.cyan;
         setBackground(backgroundColor);
         setOpaque(true);
+
         layout = new GridBagLayout();
         gbc = new GridBagConstraints();
         setLayout(layout);
+
         AI1 = new JComboBox(AIHeuristics);
         AI2 = new JComboBox(AIHeuristics);
         blacksPlayer = new JComboBox(players);
+
+        gameLogic.setBlacksPlayer(players[0]);
+        whitesPlayer = new JComboBox(players);
+        whitesPlayer.setSelectedIndex(1);
+
+        gameLogic.setWhitesPlayer(players[1]);
+
+        RadioButtonActionListener radioButtonActionListener = new RadioButtonActionListener();
+        algoritmLabel = new JLabel("Algoritm:");
+
+        miniMax = new JRadioButton("MiniMax");
+        miniMax.setBackground(backgroundColor);
+        miniMax.addActionListener(radioButtonActionListener);
+        miniMax.setSelected(true);
+
+        alphaBeta = new JRadioButton("Alpha-Beta");
+        alphaBeta.setBackground(backgroundColor);
+        alphaBeta.addActionListener(radioButtonActionListener);
+
+        algoritmGroup = new ButtonGroup();
+        algoritmGroup.add(miniMax);
+        algoritmGroup.add(alphaBeta);
+
+        player1Label = new JLabel("Black");
+        player2Label = new JLabel("White");
+        startButton = new JButton("Start game");
+
+        addListeners();
+        buildLayout();
+
+        AI1.setVisible(false);
+    }
+
+    public void addListeners() {
         blacksPlayer.addItemListener(new ItemListener() {
             public void itemStateChanged(ItemEvent event) {
                 if (event.getStateChange() == ItemEvent.SELECTED) {
@@ -61,9 +98,7 @@ public class OptionPanel extends JPanel implements ActionListener {
                 }
             }
         });
-        gameLogic.setBlacksPlayer(players[0]);
-        whitesPlayer = new JComboBox(players);
-        whitesPlayer.setSelectedIndex(1);
+
         whitesPlayer.addItemListener(new ItemListener() {
             public void itemStateChanged(ItemEvent event) {
                 if (event.getStateChange() == ItemEvent.SELECTED) {
@@ -84,7 +119,6 @@ public class OptionPanel extends JPanel implements ActionListener {
                 }
             }
         });
-        gameLogic.setWhitesPlayer(players[1]);
 
         AI1.addItemListener(new ItemListener() {
             public void itemStateChanged(ItemEvent event) {
@@ -103,27 +137,11 @@ public class OptionPanel extends JPanel implements ActionListener {
                 }
             }
         });
-        RadioButtonActionListener radioButtonActionListener = new RadioButtonActionListener();
-        algoritmLabel = new JLabel("Algoritm:");
 
-        miniMax = new JRadioButton("MiniMax");
-        miniMax.setBackground(backgroundColor);
-        miniMax.addActionListener(radioButtonActionListener);
-        miniMax.setSelected(true);
-
-        alphaBeta = new JRadioButton("Alpha-Beta");
-        alphaBeta.setBackground(backgroundColor);
-        alphaBeta.addActionListener(radioButtonActionListener);
-
-        algoritmGroup = new ButtonGroup();
-        algoritmGroup.add(miniMax);
-        algoritmGroup.add(alphaBeta);
-
-        player1Label = new JLabel("Black");
-        player2Label = new JLabel("White");
-        startButton = new JButton("Start game");
         startButton.addActionListener(this);
+    }
 
+    public void buildLayout() {
         gbc.gridx = 0;
         gbc.gridy = 0;
         add(algoritmLabel, gbc);
@@ -147,10 +165,8 @@ public class OptionPanel extends JPanel implements ActionListener {
         add(AI2, gbc);
         gbc.gridy++;
         add(startButton, gbc);
-
-        AI1.setVisible(false);
-
     }
+
 
     @Override
     protected void paintComponent(Graphics g) {
@@ -171,15 +187,14 @@ public class OptionPanel extends JPanel implements ActionListener {
     }
 
     private class RadioButtonActionListener implements ActionListener {
-        @Override
 
+        @Override
         public void actionPerformed(ActionEvent event) {
             JRadioButton button = (JRadioButton) event.getSource();
             HeuristicInterface[] heuristics = gameLogic.getHeuristics();
             gameLogic.setAlgoritm(button.getText());
             gameLogic.setHeuristic(heuristics[0].getName(), true);
             gameLogic.setHeuristic(heuristics[1].getName(), false);
-
         }
     }
 }

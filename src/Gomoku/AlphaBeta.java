@@ -1,14 +1,12 @@
 package Gomoku;
 
-
 import java.util.List;
 
-public class AlphaBeta extends MiniMax implements SearchAlgoritm{
+public class AlphaBeta extends MiniMax implements SearchAlgoritm {
 
     AlphaBeta(int[][] board, GameLogic gameLogic) {
         super(board, gameLogic);
     }
-
 
     public int[] miniMax(int depth, boolean isOpponent, boolean isBlack, int alpha, int beta) {
         List<int[]> moves = getMoves();
@@ -42,7 +40,7 @@ public class AlphaBeta extends MiniMax implements SearchAlgoritm{
 
             }
             board[move[0]][move[1]] = GameLogic.EMPTY;
-            if(alpha >= beta)
+            if (alpha >= beta)
                 break;
         }
 
@@ -55,7 +53,10 @@ public class AlphaBeta extends MiniMax implements SearchAlgoritm{
         heuristicWhites.setBoard(clone);
         heuristicBlacks.setBoard(clone);
         boolean isBlack = gameLogic.getNextPlayer() == GameLogic.BLACK;
+        startTime = System.currentTimeMillis();
         int[] result = miniMax(depth, isOpponent, isBlack, Integer.MIN_VALUE, Integer.MAX_VALUE);
+        stopTime = System.currentTimeMillis();
+        System.out.println((stopTime - startTime )/ 1000.0 + " s");
         return result;
     }
 }

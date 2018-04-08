@@ -3,7 +3,7 @@ package Gomoku.Heuristics;
 import Gomoku.GameLogic;
 
 public class SpatialHeuristic implements HeuristicInterface {
-    String name = "Blocking";
+    public static final String name = "Blocking";
     private int[][] board;
 
     public SpatialHeuristic(int[][] board) {
@@ -12,8 +12,6 @@ public class SpatialHeuristic implements HeuristicInterface {
 
     @Override
     public int evaluate(int player) {
-
-
         int score = 0;
         for (int row = 0; row < board.length; row++) {
             for (int col = 0; col < board[row].length; col++) {
@@ -33,7 +31,6 @@ public class SpatialHeuristic implements HeuristicInterface {
         return score;
     }
 
-
     private int check(int row, int col) {
         int score = 0;
         for (int i = -1; i < 2; i++) {
@@ -49,7 +46,6 @@ public class SpatialHeuristic implements HeuristicInterface {
             }
         }
         return score;
-
     }
 
     @Override

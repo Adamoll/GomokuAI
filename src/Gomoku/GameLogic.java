@@ -3,6 +3,10 @@ package Gomoku;
 import Gomoku.Heuristics.HeuristicInterface;
 
 public class GameLogic {
+    public static final int BLACK = 1;
+    public static final int WHITE = 2;
+    public static final int EMPTY = 0;
+    public static final int TIE = -1;
     public static int ROWS;
     public static int COLS;
     private int[][] board;
@@ -10,19 +14,16 @@ public class GameLogic {
     private int moveNumber;
     private int oldHoveredX;
     private int oldHoveredY;
-    private BoardPanel boardPanel;
-    String blacksPlayer;
-    String whitesPlayer;
-    public static final int BLACK = 1;
-    public static final int WHITE = 2;
-    public static final int EMPTY = 0;
-    private final int TIE = -1;
     private boolean gameOver;
+
+    private String blacksPlayer;
+    private String whitesPlayer;
+
+    private BoardPanel boardPanel;
     private MiniMax miniMax;
     private AlphaBeta alphaBeta;
     private SearchAlgoritm algoritm;
     private Thread AIGame;
-
 
     GameLogic(int ROWS, int COLS, BoardPanel boardPanel) {
         this.boardPanel = boardPanel;
@@ -35,74 +36,6 @@ public class GameLogic {
         alphaBeta = new AlphaBeta(this.board, this);
         algoritm = miniMax;
     }
-
-    public int getPlayerAt(int row, int col) {
-        return board[row][col];
-    }
-
-    public void setHovered(int row, int col) {
-        board[row][col] = 5 - nextPlayer;
-    }
-
-
-    public void firstAIMove() {
-        board[7][7] = nextPlayer;
-        nextPlayer = 3 - nextPlayer;
-        moveNumber++;
-    }
-
-    public void moveHuman(int row, int col) {
-        board[row][col] = nextPlayer;
-        nextPlayer = 3 - nextPlayer;
-        moveNumber++;
-        checkStatus();
-    }
-
-    public void moveAI(boolean isOpponent) {
-        if (!isGameOver()) {
-            int[] move = algoritm.run(4, isOpponent);
-            board[move[1]][move[2]] = nextPlayer;
-            nextPlayer = 3 - nextPlayer;
-            moveNumber++;
-            checkStatus();
-        }
-    }
-
-
-    public void move(int row, int col) {
-        moveHuman(row, col);
-        if (!areBothPlayers())
-            moveAI(false);
-    }
-
-
-    public void setNextPlayer(int p) {
-        nextPlayer = p;
-    }
-
-    public boolean isTaken(int row, int col) {
-        return board[row][col] == BLACK || board[row][col] == WHITE;
-    }
-
-    public void setOldHovered(int x, int y) {
-        oldHoveredX = x;
-        oldHoveredY = y;
-    }
-
-    public void resetOldHovered() {
-        if (getPlayerAt(oldHoveredX, oldHoveredY) == 3 || getPlayerAt(oldHoveredX, oldHoveredY) == 4)
-            board[oldHoveredX][oldHoveredY] = 0;
-    }
-
-    public boolean check(int row, int rowDir, int col, int colDir) {
-        int player = board[row][col];
-        for (int i = 0; i < 5; i++) {
-            if (board[row + rowDir * i][col + colDir * i] != player)
-                return false;
-        }
-        return true;
-    }
-
 
     public int getGameStatus() {
         for (int row = 0; row < ROWS; row++) {
@@ -155,6 +88,70 @@ public class GameLogic {
         boardPanel.repaint();
     }
 
+    public boolean check(int row, int rowDir, int col, int colDir) {
+        int player = board[row][col];
+        for (int i = 0; i < 5; i++) {
+            if (board[row + rowDir * i][col + colDir * i] != player)
+                return false;
+        }
+        return true;
+    }
+
+    public void moveHuman(int row, int col) {
+        board[row][col] = nextPlayer;
+        nextPlayer = 3 - nextPlayer;
+        moveNumber++;
+        checkStatus();
+    }
+
+    public void moveAI(boolean isOpponent) {
+        if (!isGameOver()) {
+            int[] move = algoritm.run(4, isOpponent);
+            board[move[1]][move[2]] = nextPlayer;
+            nextPlayer = 3 - nextPlayer;
+            moveNumber++;
+            checkStatus();
+        }
+    }
+
+    public void move(int row, int col) {
+        moveHuman(row, col);
+        if (!areBothPlayers())
+            moveAI(false);
+    }
+
+    public void firstAIMove() {
+        board[7][7] = nextPlayer;
+        nextPlayer = 3 - nextPlayer;
+        moveNumber++;
+    }
+
+    public void setNextPlayer(int p) {
+        nextPlayer = p;
+    }
+
+    public int getPlayerAt(int row, int col) {
+        return board[row][col];
+    }
+
+    public boolean isTaken(int row, int col) {
+        return board[row][col] == BLACK || board[row][col] == WHITE;
+    }
+
+    public void setHovered(int row, int col) {
+        board[row][col] = 5 - nextPlayer;
+    }
+
+    public void setOldHovered(int x, int y) {
+        oldHoveredX = x;
+        oldHoveredY = y;
+    }
+
+    public void resetOldHovered() {
+        if (getPlayerAt(oldHoveredX, oldHoveredY) == 3 || getPlayerAt(oldHoveredX, oldHoveredY) == 4)
+            board[oldHoveredX][oldHoveredY] = 0;
+    }
+
     public void reset() {
         if (AIGame != null)
             AIGame.interrupt();
@@ -163,12 +160,12 @@ public class GameLogic {
                 board[row][col] = EMPTY;
             }
         }
+
         moveNumber = 0;
         gameOver = false;
         setNextPlayer(BLACK);
-        boardPanel.winningLabel.setText("");
+        boardPanel.setWinningLabelText("");
         boardPanel.repaint();
-
 
         if (blacksPlayer.equals("AI") && whitesPlayer.equals("Player"))
             firstAIMove();
@@ -182,7 +179,6 @@ public class GameLogic {
                                 moveAI(false);
                                 boardPanel.repaint();
                             }
-
                         }
                     }
             );
@@ -198,8 +194,12 @@ public class GameLogic {
         return copy;
     }
 
-    public boolean isPlayer() {
-        return blacksPlayer.equals("Player") || whitesPlayer.equals("Player");
+    public void setAlgoritm(String alg) {
+        if (alg.equals("MiniMax")) {
+            algoritm = miniMax;
+        } else if (alg.equals("Alpha-Beta")) {
+            algoritm = alphaBeta;
+        }
     }
 
     public boolean areBothAI() {
@@ -238,11 +238,4 @@ public class GameLogic {
         this.whitesPlayer = whitesPlayer;
     }
 
-    public void setAlgoritm(String alg) {
-        if (alg.equals("MiniMax")) {
-            algoritm = miniMax;
-        } else if (alg.equals("Alpha-Beta")) {
-            algoritm = alphaBeta;
-        }
-    }
 }

@@ -1,11 +1,7 @@
 package Gomoku.Heuristics;
 
-/**
- * Created by Jan Matejko on 02.05.2017.
- */
 public class LineHeuristic implements HeuristicInterface {
-    String name = "Line";
-
+    public static final String name = "Line";
     private int[][] board;
 
     public LineHeuristic(int[][] board) {
@@ -52,9 +48,5 @@ public class LineHeuristic implements HeuristicInterface {
 
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 }

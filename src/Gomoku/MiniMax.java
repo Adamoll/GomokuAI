@@ -6,11 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MiniMax implements SearchAlgoritm {
-
     protected int[][] board;
-    GameLogic gameLogic;
-    HeuristicInterface heuristicBlacks;
-    HeuristicInterface heuristicWhites;
+    protected GameLogic gameLogic;
+    protected HeuristicInterface heuristicBlacks;
+    protected HeuristicInterface heuristicWhites;
+    protected long startTime, stopTime;
 
     MiniMax(int[][] board, GameLogic gameLogic) {
         this.board = board;
@@ -19,45 +19,6 @@ public class MiniMax implements SearchAlgoritm {
         heuristicBlacks = new LineHeuristic(board);
     }
 
-
-//    public int[] miniMax(int depth, boolean isOpponent) {
-//        List<int[]> moves = getMoves();
-//        int bestRow = -1;
-//        int bestCol = -1;
-//        int bestScore = isOpponent ? Integer.MAX_VALUE : Integer.MIN_VALUE;
-//        int currentScore;
-//        int player = isOpponent ? GameLogic.BLACK : GameLogic.WHITE;
-//        if (moves.isEmpty() || depth == 0) {
-//            if (gameLogic.getNextPlayer() == GameLogic.BLACK)
-//                bestScore = heuristicBlacks.evaluate(player);
-//            else if (gameLogic.getNextPlayer() == GameLogic.WHITE)
-//                bestScore = heuristicWhites.evaluate(player);
-//            return new int[]{bestScore, bestRow, bestCol};
-//        }
-//        for (int[] move : moves) {
-//            board[move[0]][move[1]] = player;
-//            if (!isOpponent) {
-//                currentScore = miniMax(depth - 1, !isOpponent)[0];
-//                if (currentScore > bestScore) {
-//                    bestScore = currentScore;
-//                    bestRow = move[0];
-//                    bestCol = move[1];
-//                }
-//            } else if (isOpponent) {
-//                currentScore = miniMax(depth - 1, !isOpponent)[0];
-//                if (currentScore < bestScore) {
-//                    bestScore = currentScore;
-//                    bestRow = move[0];
-//                    bestCol = move[1];
-//                }
-//
-//            }
-//            board[move[0]][move[1]] = GameLogic.EMPTY;
-//        }
-//
-//        return new int[]{bestScore, bestRow, bestCol};
-//    }
-
     public int[] miniMax(int depth, boolean isOpponent, boolean isBlack) {
         List<int[]> moves = getMoves();
         int bestRow = -1;
@@ -65,6 +26,7 @@ public class MiniMax implements SearchAlgoritm {
         int bestScore = isOpponent ? Integer.MAX_VALUE : Integer.MIN_VALUE;
         int currentScore = 0;
         int player = isBlack ? GameLogic.BLACK : GameLogic.WHITE;
+
         if (moves.isEmpty() || depth == 0) {
             if (gameLogic.getNextPlayer() == GameLogic.BLACK)
                 bestScore = heuristicBlacks.evaluate(player);
@@ -88,7 +50,6 @@ public class MiniMax implements SearchAlgoritm {
                     bestRow = move[0];
                     bestCol = move[1];
                 }
-
             }
             board[move[0]][move[1]] = GameLogic.EMPTY;
         }
@@ -102,7 +63,10 @@ public class MiniMax implements SearchAlgoritm {
         heuristicWhites.setBoard(clone);
         heuristicBlacks.setBoard(clone);
         boolean isBlack = gameLogic.getNextPlayer() == GameLogic.BLACK;
+        startTime = System.currentTimeMillis();
         int[] result = miniMax(depth, isOpponent, isBlack);
+        stopTime = System.currentTimeMillis();
+        System.out.println((stopTime - startTime )/ 1000.0 + " s");
         return result;
     }
 
@@ -111,9 +75,6 @@ public class MiniMax implements SearchAlgoritm {
 
         for (int row = 0; row < board.length; row++) {
             for (int col = 0; col < board[row].length; col++) {
-//                if (board[row][col] == GameLogic.EMPTY) {
-//                    moves.add(new int[]{row, col});
-//                }
                 if (board[row][col] == GameLogic.EMPTY && isRationalMove(row, col))
                     moves.add(new int[]{row, col});
             }
@@ -158,9 +119,5 @@ public class MiniMax implements SearchAlgoritm {
     @Override
     public HeuristicInterface[] getHeuristic() {
         return new HeuristicInterface[]{heuristicBlacks, heuristicWhites};
-    }
-
-    public void setBoard(int[][] board) {
-        this.board = board;
     }
 }

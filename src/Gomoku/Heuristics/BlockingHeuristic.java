@@ -3,7 +3,7 @@ package Gomoku.Heuristics;
 import Gomoku.GameLogic;
 
 public class BlockingHeuristic implements HeuristicInterface {
-    String name = "Blocking";
+    public static final String name = "Blocking";
     private int[][] board;
 
     public BlockingHeuristic(int[][] board) {
@@ -65,9 +65,5 @@ public class BlockingHeuristic implements HeuristicInterface {
 
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 }
