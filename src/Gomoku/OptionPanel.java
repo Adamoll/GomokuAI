@@ -33,7 +33,7 @@ public class OptionPanel extends JPanel implements ActionListener {
         super();
         this.gameLogic = gameLogic;
 
-        backgroundColor = Color.cyan;
+        backgroundColor = Color.yellow;
         setBackground(backgroundColor);
         setOpaque(true);
 
@@ -57,11 +57,11 @@ public class OptionPanel extends JPanel implements ActionListener {
         miniMax = new JRadioButton("MiniMax");
         miniMax.setBackground(backgroundColor);
         miniMax.addActionListener(radioButtonActionListener);
-        miniMax.setSelected(true);
 
         alphaBeta = new JRadioButton("Alpha-Beta");
         alphaBeta.setBackground(backgroundColor);
         alphaBeta.addActionListener(radioButtonActionListener);
+        alphaBeta.setSelected(true);
 
         algoritmGroup = new ButtonGroup();
         algoritmGroup.add(miniMax);
@@ -146,9 +146,9 @@ public class OptionPanel extends JPanel implements ActionListener {
         gbc.gridy = 0;
         add(algoritmLabel, gbc);
         gbc.gridy++;
-        add(miniMax, gbc);
-        gbc.gridy++;
         add(alphaBeta, gbc);
+        gbc.gridy++;
+        add(miniMax, gbc);
         gbc.gridy++;
         add(player1Label, gbc);
         gbc.gridy++;

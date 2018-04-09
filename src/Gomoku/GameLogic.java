@@ -34,7 +34,7 @@ public class GameLogic {
         moveNumber = 0;
         miniMax = new MiniMax(this.board, this);
         alphaBeta = new AlphaBeta(this.board, this);
-        algoritm = miniMax;
+        algoritm = alphaBeta;
     }
 
     public int getGameStatus() {
