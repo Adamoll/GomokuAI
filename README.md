@@ -13,4 +13,4 @@ AI can use one of three heuristics to evaluate state of the game to choose the b
   
 **GomokuAI** can also simulate game between two AI players with different heuristics.
 ## Preview
-[Preview](https://i.imgur.com/fI4r49r.gif)
+![Preview](https://i.imgur.com/fI4r49r.gif)
