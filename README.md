@@ -12,3 +12,5 @@ AI can use one of three heuristics to evaluate state of the game to choose the b
   if it would give him advantage. This is the strongest one, so you can test your skills! :D
   
 **GomokuAI** can also simulate game between two AI players with different heuristics.
+## Preview
+[Preview](https://i.imgur.com/fI4r49r.gif)
